@@ -31,7 +31,7 @@ struct Habit: Identifiable {
     
     
     
-    static var Habit = [
-        Habit(name: "call prarent")
+    static var habitData = [
+        Habit(name: "call prarent" , noftification: true,quantity: 5,quantityDone: 3,status: .toDo,streak: 5)
     ]
 }

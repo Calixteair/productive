@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		827578082BA19C9600B2154E /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827578072BA19C9600B2154E /* RowView.swift */; };
+		8275780A2BA19DF300B2154E /* RowViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827578092BA19DF300B2154E /* RowViewType.swift */; };
 		BBD8D1922BA1912900E0A0DF /* ProjethabitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD8D1912BA1912900E0A0DF /* ProjethabitApp.swift */; };
 		BBD8D1942BA1912900E0A0DF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD8D1932BA1912900E0A0DF /* ContentView.swift */; };
 		BBD8D1962BA1912A00E0A0DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD8D1952BA1912A00E0A0DF /* Assets.xcassets */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		827578072BA19C9600B2154E /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
+		827578092BA19DF300B2154E /* RowViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowViewType.swift; sourceTree = "<group>"; };
 		BBD8D18E2BA1912900E0A0DF /* Projethabit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Projethabit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD8D1912BA1912900E0A0DF /* ProjethabitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjethabitApp.swift; sourceTree = "<group>"; };
 		BBD8D1932BA1912900E0A0DF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -79,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				BBD8D1932BA1912900E0A0DF /* ContentView.swift */,
+				827578072BA19C9600B2154E /* RowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -87,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				BBD8D1A42BA192E900E0A0DF /* HabitViewModel.swift */,
+				827578092BA19DF300B2154E /* RowViewType.swift */,
 			);
 			path = ViewsModels;
 			sourceTree = "<group>";
@@ -170,6 +176,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBD8D1A52BA192E900E0A0DF /* HabitViewModel.swift in Sources */,
+				8275780A2BA19DF300B2154E /* RowViewType.swift in Sources */,
+				827578082BA19C9600B2154E /* RowView.swift in Sources */,
 				BBD8D1942BA1912900E0A0DF /* ContentView.swift in Sources */,
 				BBD8D1A72BA1934000E0A0DF /* Habit.swift in Sources */,
 				BBD8D1922BA1912900E0A0DF /* ProjethabitApp.swift in Sources */,
