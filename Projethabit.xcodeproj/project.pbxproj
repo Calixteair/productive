@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8275780A2BA19DF300B2154E /* RowViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827578092BA19DF300B2154E /* RowViewType.swift */; };
 		82C0F9B42BAAC71A00D96BB2 /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C0F9B32BAAC71A00D96BB2 /* RowView.swift */; };
+		82C0F9B62BAADCFC00D96BB2 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = 82C0F9B52BAADCFC00D96BB2 /* .gitattributes */; };
 		BBC9F0482BAAC872001C1792 /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9F0472BAAC872001C1792 /* AddHabitView.swift */; };
 		BBD8D1922BA1912900E0A0DF /* ProjethabitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD8D1912BA1912900E0A0DF /* ProjethabitApp.swift */; };
 		BBD8D1942BA1912900E0A0DF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD8D1932BA1912900E0A0DF /* ContentView.swift */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		827578092BA19DF300B2154E /* RowViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowViewType.swift; sourceTree = "<group>"; };
 		82C0F9B32BAAC71A00D96BB2 /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
+		82C0F9B52BAADCFC00D96BB2 /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
 		BBC9F0472BAAC872001C1792 /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		BBD8D18E2BA1912900E0A0DF /* Projethabit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Projethabit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD8D1912BA1912900E0A0DF /* ProjethabitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjethabitApp.swift; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 		BBD8D1852BA1912900E0A0DF = {
 			isa = PBXGroup;
 			children = (
+				82C0F9B52BAADCFC00D96BB2 /* .gitattributes */,
 				BBD8D1A32BA1920B00E0A0DF /* Models */,
 				BBD8D1A22BA191F800E0A0DF /* ViewsModels */,
 				BBD8D1A02BA191D800E0A0DF /* Views */,
@@ -178,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBD8D19A2BA1912A00E0A0DF /* Preview Assets.xcassets in Resources */,
+				82C0F9B62BAADCFC00D96BB2 /* .gitattributes in Resources */,
 				BBD8D1962BA1912A00E0A0DF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
