@@ -15,7 +15,11 @@ struct RowView: View {
     
     var body: some View {
         if(type == .task){
-            
+            ZStack{
+                RoundedRectangle(cornerRadius: 40)
+                
+                
+            }
         }
     }
 }

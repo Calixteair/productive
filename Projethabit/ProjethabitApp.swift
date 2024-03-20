@@ -11,7 +11,6 @@ import SwiftUI
 struct ProjethabitApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
         }
     }
 }
