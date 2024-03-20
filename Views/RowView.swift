@@ -13,13 +13,56 @@ struct RowView: View {
     
     let type : typeRow
     
+    var progressHabit: Double{
+        return (CGFloat(habit.quantityDone) / CGFloat(habit.quantity) )
+    }
+    
     var body: some View {
         if(type == .task){
-            ZStack{
-                RoundedRectangle(cornerRadius: 40)
-                
-                
-            }
+                ZStack(alignment:.leading){
+                 
+                        
+                        ZStack(alignment: .leading){
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(Color(red: 1, green: 0.9725, blue: 0.9725))
+                            GeometryReader{ proxy in
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color(red: 1, green: 0.8470, blue: 0.8470))
+                                    .frame(width: proxy.size.width * progressHabit)
+                            }
+                        }.frame(height: 80)
+                    
+                        
+                    HStack{
+                        Text(habit.name)
+                            .font(.title)
+                            .padding()
+                        Spacer()
+                        ZStack(alignment:.trailing){
+                            VStack{
+                                if habit.streak > 0{
+                                    Text("🔥 \(habit.streak) Days")
+                                        .padding(5)
+                                    
+                                    Spacer()
+                                    
+                                }
+                            }
+                            
+                            Text("\(habit.quantityDone)/\(habit.quantity)")
+                                .font(.title2)
+                                .padding()
+                            Spacer()
+                            
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    
+                }.frame(height: 80)
+            
         }
     }
 }

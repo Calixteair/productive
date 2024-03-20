@@ -13,6 +13,8 @@ struct HabitDayView: View {
     var body: some View {
         NavigationView{
             
+        }
+    }
 }
 
 struct HabitDayView_Previews: PreviewProvider {
