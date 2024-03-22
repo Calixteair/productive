@@ -12,15 +12,41 @@ import SwiftUI
 struct HabitDayView: View {
     
     @EnvironmentObject var data: HabitViewModel
+    @State private var showAlert = false
+    @State private var habitToDelete: Habit?
     
     
     var body: some View {
         NavigationView{
-            List{
-                ForEach(data.habits) {_ in Text("test")
+            List {
+                ForEach(data.habits) {habit in
+                    if habit.status != .suspend {
+                        RowView(habit: habit, type: .task)
+                            .onTapGesture {
+                                data.completHabit(habit: habit)
+                            }
+                    }
                 }
-                .onDelete(perform: data.deleteItem)
+                .onDelete { indexSet in
+                    if let firstIndex = indexSet.first {
+                        self.habitToDelete = data.habits[firstIndex]
+                        self.showAlert.toggle()
+                    }
+                }
                 .onMove(perform: data.moveItem)
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Confirmation"),
+                    message: Text("Are you sure you want to delete this habit?"),
+                    primaryButton: .destructive(Text("Delete")) {
+                        if let habitToDelete = habitToDelete {
+                            data.suspendHabit(habit: habitToDelete)
+                            }
+                            self.habitToDelete = nil
+                    },
+                    secondaryButton: .cancel()
+                )
             }
             .navigationTitle("Habit")
             .listStyle(PlainListStyle())
@@ -34,7 +60,6 @@ struct HabitDayView: View {
             }
             
         }
-        
     }
 }
     

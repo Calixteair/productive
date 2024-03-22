@@ -87,8 +87,8 @@ struct AddHabitView: View {
 
             
             Button{
-                data.addItem(title:habitName)
                 presentationMode.wrappedValue.dismiss()
+                data.addItem(title: habitName, notification: noftification, timesheet: timesheet, quantity: quantity, repetition: repetition, unit: unit)
                 
             } label: {
                 Text("Save")

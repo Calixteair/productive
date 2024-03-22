@@ -30,7 +30,7 @@ struct Habit: Identifiable {
     var id = UUID()
     var name: String
     var noftification: Bool
-    var timesheet: String
+    var timesheet: Date
     var quantity: Int
     var quantityDone: Int
     var status: Status
@@ -42,9 +42,9 @@ struct Habit: Identifiable {
     
     
     static var habitData = [
-        Habit(name: "call prarent",noftification: true,timesheet:"12h32", quantity: 1,quantityDone: 0,status: .toDo, streak: 5, repetition: [.all], unit:"fois"),
-        Habit(name: "call dog",noftification: false,timesheet:"12h32", quantity: 3,quantityDone: 2,status: .toDo, streak: 0, repetition: [.Friday,.Monday], unit:""),
-        Habit(name: "run",noftification: false,timesheet:"12h32", quantity: 1,quantityDone: 1,status: .done, streak: 10, repetition: [.all], unit:"")
+        Habit(name: "call prarent",noftification: true,timesheet: Date(), quantity: 1,quantityDone: 0,status: .toDo, streak: 5, repetition: [.all], unit:"fois"),
+        Habit(name: "call dog",noftification: false,timesheet:Date(), quantity: 3,quantityDone: 2,status: .toDo, streak: 0, repetition: [.Friday,.Monday], unit:""),
+        Habit(name: "run",noftification: false,timesheet:Date(), quantity: 1,quantityDone: 1,status: .done, streak: 10, repetition: [.all], unit:"")
         
     ]
 }
