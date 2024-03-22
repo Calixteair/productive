@@ -31,7 +31,7 @@ class HabitViewModel: ObservableObject {
     }
     
     func addItem(title: String){
-        let newHabit = Habit(name: title,noftification: true,timesheet:"12h32", quantity: 1,quantityDone: 0,status: .toDo, streak: 5, repetition: [.all], unit:"")
+        let newHabit = Habit(name: title,noftification: true,timesheet:Date(), quantity: 1,quantityDone: 0,status: .toDo, streak: 5, repetition: [.Monday], unit:"")
         habits.append(newHabit)
     }
     
