@@ -18,7 +18,7 @@ struct AddHabitView: View {
     @State var quantityDone: Int = 0
     @State var status: Status = .toDo
     @State var streak: Int = 0
-    @State var repetition: [Day] = [.all]
+    @State var repetition: [Day] = []
     @State private var selectedDays: Set<Day> = []
     @State private var showList = false
     @State private var unit: String = ""
