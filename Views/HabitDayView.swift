@@ -17,6 +17,7 @@ struct HabitDayView: View {
     @State private var habitToDelete: Habit?
     
     
+    
     var body: some View {
         NavigationView{
             
@@ -84,6 +85,7 @@ struct HabitDayView: View {
                                     RowView(habit: habit, type: .task)
                                         .onTapGesture {
                                             data.completHabit(habit: habit)
+                                            
                                         }
                                         .listRowInsets(EdgeInsets())
                                         .listRowSeparator(.hidden)
