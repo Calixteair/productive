@@ -12,6 +12,7 @@
 		82AE01052BB312A200DFC032 /* EditHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AE01042BB312A200DFC032 /* EditHabitView.swift */; };
 		82C0F9B42BAAC71A00D96BB2 /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C0F9B32BAAC71A00D96BB2 /* RowView.swift */; };
 		82C0F9B62BAADCFC00D96BB2 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = 82C0F9B52BAADCFC00D96BB2 /* .gitattributes */; };
+		BB0D989B2BB2FA7E00A79109 /* ListHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0D989A2BB2FA7E00A79109 /* ListHistory.swift */; };
 		BBC9F0482BAAC872001C1792 /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9F0472BAAC872001C1792 /* AddHabitView.swift */; };
 		BBD8D1922BA1912900E0A0DF /* ProjethabitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD8D1912BA1912900E0A0DF /* ProjethabitApp.swift */; };
 		BBD8D1942BA1912900E0A0DF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD8D1932BA1912900E0A0DF /* ContentView.swift */; };
@@ -28,6 +29,7 @@
 		82AE01042BB312A200DFC032 /* EditHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitView.swift; sourceTree = "<group>"; };
 		82C0F9B32BAAC71A00D96BB2 /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
 		82C0F9B52BAADCFC00D96BB2 /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
+		BB0D989A2BB2FA7E00A79109 /* ListHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHistory.swift; sourceTree = "<group>"; };
 		BBC9F0472BAAC872001C1792 /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		BBD8D18E2BA1912900E0A0DF /* Projethabit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Projethabit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD8D1912BA1912900E0A0DF /* ProjethabitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjethabitApp.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				BBD8D1A62BA1934000E0A0DF /* Habit.swift */,
+				BB0D989A2BB2FA7E00A79109 /* ListHistory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				82AE01052BB312A200DFC032 /* EditHabitView.swift in Sources */,
 				82AE01032BB3103800DFC032 /* ModifyHabitView.swift in Sources */,
 				82C0F9B42BAAC71A00D96BB2 /* RowView.swift in Sources */,
+				BB0D989B2BB2FA7E00A79109 /* ListHistory.swift in Sources */,
 				BBD8D1942BA1912900E0A0DF /* ContentView.swift in Sources */,
 				BBD8D1E12BA1A0A800E0A0DF /* HabitDayView.swift in Sources */,
 				BBD8D1A72BA1934000E0A0DF /* Habit.swift in Sources */,

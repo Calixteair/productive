@@ -17,6 +17,7 @@ struct HabitDayView: View {
     @State private var habitToDelete: Habit?
     
     
+    
     var body: some View {
         NavigationView{
             

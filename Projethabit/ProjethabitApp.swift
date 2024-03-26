@@ -13,6 +13,7 @@ struct ProjethabitApp: App {
         WindowGroup {
             HabitDayView()
                 .environmentObject(HabitViewModel())
+            
         }
     }
 }

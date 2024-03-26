@@ -25,8 +25,10 @@ enum Day: String, CaseIterable{
 }
 
 
-struct Habit: Identifiable {
+struct Habit: Identifiable  {
+
     var id = UUID()
+
     var name: String
     var notification: Bool
     var timesheet: Date
@@ -117,9 +119,12 @@ struct Habit: Identifiable {
     
             
     static var habitData = [
-        Habit(name: "call prarent",notification: true,timesheet:Date(), quantity: 1,quantityDone: 0,status: .toDo, streak: 5, repetition:[.Monday,.Wednesday,.Thursday,.Tuesday], unit:"fois"),
-        Habit(name: "call dog",notification: false,timesheet:Date(), quantity: 3,quantityDone: 2,status: .toDo, streak: 0, repetition: [.Sunday,.Saturday], unit:""),
-        Habit(name: "run",notification: false,timesheet:Date(), quantity: 1,quantityDone: 1,status: .done, streak: 10, repetition: [.Monday,.Friday,.Saturday,.Sunday,.Wednesday,.Thursday,.Tuesday], unit:"")
-        
+        Habit( name: "call parent", notification: true, timesheet: Date(), quantity: 1, quantityDone: 0, status: .toDo, streak: 7, repetition: [.Monday,.Friday,.Wednesday,.Thursday,.Tuesday], unit: "fois"),
+        Habit( name: "call dog", notification: false, timesheet: Date(), quantity: 3, quantityDone: 2, status: .toDo, streak: 0, repetition: [.Sunday,.Saturday], unit: ""),
+        Habit( name: "run", notification: false, timesheet: Date(), quantity: 1, quantityDone: 1, status: .done, streak: 10, repetition: [.Monday,.Friday,.Saturday,.Sunday,.Wednesday,.Thursday,.Tuesday], unit: "")
     ]
+    
+    
+    
+    
 }

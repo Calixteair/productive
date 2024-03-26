@@ -18,6 +18,9 @@ class HabitViewModel: ObservableObject {
     
     @Published var filteredHabits: [Habit]?
     
+    @Published var history: LisHistory = LisHistory.histoData
+    
+    
     func fetchCurrentWeek(){
         let today = Date()
         let calendar = Calendar.current
@@ -61,6 +64,7 @@ class HabitViewModel: ObservableObject {
         getHabits()
         fetchCurrentWeek()
         filterTodayHabits()
+        historyInit()
     }
     
     func getHabits(){
@@ -85,6 +89,11 @@ class HabitViewModel: ObservableObject {
             }
         }
         
+    }
+    
+    func historyInit(){
+        self.history = LisHistory.histoData
+        print(self.history)
     }
     
     
@@ -123,6 +132,7 @@ class HabitViewModel: ObservableObject {
                     habits[index].quantityDone = habits[index].quantity
                     habits[index].status = .done
                     habits[index].streak += 1
+                    pushInHistory(id: index)
                 }
 
             }
@@ -175,19 +185,28 @@ class HabitViewModel: ObservableObject {
     }
     
     func addItem(title: String, notification: Bool, timesheet: Date, quantity: Int, repetition: [Day], unit: String) {
-            
-        let newHabit = Habit(name: title,notification: notification,timesheet: timesheet, quantity: quantity,quantityDone: 0,status: .toDo, streak: 0, repetition: repetition, unit:unit)
-        
+
+        let newHabit = Habit(name: title,notification: notification,timesheet: timesheet, quantity: quantity,quantityDone: 0, status: .toDo, streak: 0, repetition: repetition, unit:unit)
         habits.append(newHabit)
         self.filterTodayHabits()
         self.printAllHabitsDetails()
 
     }
     
+    
+    func pushInHistory(id: Int){
+        var habitinfo = habits[id]
+        var finishhabit = ItemHistory(idHabit: habitinfo.id, streak: habitinfo.streak+1, date: Date(), status: .done)
+        LisHistory.histoData.items.append(finishhabit)
+        print("add in histor")
+        
+    }
+    
     func updateItem(habit: Habit){
         for ( index, td) in habits.enumerated(){
             if(td.id == habit.id){
                 habits[index].status = .done
+                
                 
             }
         }
