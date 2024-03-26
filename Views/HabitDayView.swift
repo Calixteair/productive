@@ -85,7 +85,8 @@ struct HabitDayView: View {
                                     RowView(habit: habit, type: .task)
                                         .onTapGesture {
                                             data.completHabit(habit: habit)
-                                            
+                                            data.filterTodayHabits()
+
                                         }
                                         .listRowInsets(EdgeInsets())
                                         .listRowSeparator(.hidden)
@@ -96,15 +97,20 @@ struct HabitDayView: View {
                                 if let firstIndex = indexSet.first {
                                     self.habitToDelete = tasks[firstIndex]
                                     self.showAlert.toggle()
+                                    
                                 }
                             }
-                            .onMove(perform: data.moveItem)
+                            .onMove{indices, newOffset in
+                            data.moveItem(from: indices, to: newOffset)
+                            data.filterTodayHabits()
+
+                            }
+                            
                         }
                         
                     }
                    
                 }
-                .listStyle(.plain)
                 .alert(isPresented: $showAlert) {
                     Alert(
                         title: Text("Confirmation"),
@@ -112,6 +118,7 @@ struct HabitDayView: View {
                         primaryButton: .destructive(Text("Delete")) {
                             if let habitToDelete = habitToDelete {
                                 data.suspendHabit(habit: habitToDelete)
+                                data.filterTodayHabits()
                             }
                             self.habitToDelete = nil
                         },
@@ -122,6 +129,7 @@ struct HabitDayView: View {
                     data.filterTodayHabits()
                     
                 }
+               
             
             }
             .navigationTitle("Habit")
