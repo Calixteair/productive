@@ -28,7 +28,7 @@ enum Day: String, CaseIterable{
 struct Habit: Identifiable {
     var id = UUID()
     var name: String
-    var noftification: Bool
+    var notification: Bool
     var timesheet: Date
     var quantity: Int
     var quantityDone: Int
@@ -64,11 +64,62 @@ struct Habit: Identifiable {
           return dateFormatter.string(from: timesheet)
       }
     
+    mutating func updateHabit(name: String? = nil,
+                              notification: Bool? = nil,
+                              timesheet: Date? = nil,
+                              quantity: Int? = nil,
+                              quantityDone: Int? = nil,
+                              status: Status? = nil,
+                              streak: Int? = nil,
+                              repetition: [Day]? = nil,
+                              unit: String? = nil) {
+        if let newName = name {
+            self.name = newName
+        }
+        if let newNotification = notification {
+            self.notification = newNotification
+        }
+        if let newTimesheet = timesheet {
+            self.timesheet = newTimesheet
+        }
+        if let newQuantity = quantity {
+            self.quantity = newQuantity
+        }
+        if let newQuantityDone = quantityDone {
+            self.quantityDone = newQuantityDone
+        }
+        if let newStatus = status {
+            self.status = newStatus
+        }
+        if let newStreak = streak {
+            self.streak = newStreak
+        }
+        if let newRepetition = repetition {
+            self.repetition = newRepetition
+        }
+        if let newUnit = unit {
+            self.unit = newUnit
+        }
+        
+            print("Habit name:", self.name)
+            print("Notification:", self.notification)
+            print("Timesheet:", self.timesheet)
+            print("Quantity:", self.quantity)
+            print("Repetition:", self.repetition)
+            print("Unit:", self.unit)
+        
+    }
+
+    
+    
+    
+    
+    
             
     static var habitData = [
-        Habit(name: "call prarent",noftification: true,timesheet:Date(), quantity: 1,quantityDone: 0,status: .toDo, streak: 5, repetition:[.Monday,.Friday,.Wednesday,.Thursday,.Tuesday], unit:"fois"),
-        Habit(name: "call dog",noftification: false,timesheet:Date(), quantity: 3,quantityDone: 2,status: .toDo, streak: 0, repetition: [.Sunday,.Saturday], unit:""),
-        Habit(name: "run",noftification: false,timesheet:Date(), quantity: 1,quantityDone: 1,status: .done, streak: 10, repetition: [.Monday,.Friday,.Saturday,.Sunday,.Wednesday,.Thursday,.Tuesday], unit:"")
+        Habit(name: "call prarent",notification: true,timesheet:Date(), quantity: 1,quantityDone: 0,status: .toDo, streak: 5, repetition:[.Monday,.Wednesday,.Thursday,.Tuesday], unit:"fois"),
+        Habit(name: "call dog",notification: false,timesheet:Date(), quantity: 3,quantityDone: 2,status: .toDo, streak: 0, repetition: [.Sunday,.Saturday], unit:""),
+        Habit(name: "run",notification: false,timesheet:Date(), quantity: 1,quantityDone: 1,status: .done, streak: 10, repetition: [.Monday,.Friday,.Saturday,.Sunday,.Wednesday,.Thursday,.Tuesday], unit:"")
         
     ]
 }

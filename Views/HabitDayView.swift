@@ -96,15 +96,11 @@ struct HabitDayView: View {
                                 if let firstIndex = indexSet.first {
                                     self.habitToDelete = tasks[firstIndex]
                                     self.showAlert.toggle()
+
                                     
                                 }
                             }
-                            .onMove{indices, newOffset in
-                            data.moveItem(from: indices, to: newOffset)
-                            data.filterTodayHabits()
-
-                            }
-                            
+                        
                         }
                         
                     }
@@ -116,6 +112,7 @@ struct HabitDayView: View {
                         message: Text("Are you sure you want to delete this habit?"),
                         primaryButton: .destructive(Text("Delete")) {
                             if let habitToDelete = habitToDelete {
+                                print(habitToDelete.name)
                                 data.suspendHabit(habit: habitToDelete)
                                 data.filterTodayHabits()
                             }
@@ -135,7 +132,7 @@ struct HabitDayView: View {
             .listStyle(PlainListStyle())
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading){
-                    EditButton()
+                    NavigationLink("Modify", destination:ModifyHabitView())
                 }
                 ToolbarItem(placement: .navigationBarTrailing){
                     NavigationLink("Add", destination: AddHabitView())

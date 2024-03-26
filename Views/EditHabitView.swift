@@ -1,40 +1,44 @@
 //
-//  AddHabitView.swift
+//  EditHabitView.swift
 //  Projethabit
 //
-//  Created by reymond calixte on 20/03/2024.
+//  Created by akburak zekeriya on 26/03/2024.
 //
 
 import SwiftUI
 
-struct AddHabitView: View {
+struct EditHabitView: View {
+        @State var habitName: String
+      @State var notification: Bool
+      @State var timesheet: Date
+      @State var quantity: Int
+      @State private var selectedDays: Set<Day>
+      @State private var showList = false
+      @State private var unit: String
     
+    @State var habitEdit: Habit
 
     
-    @State var habitName: String = ""
-    @State var noftification: Bool = false
-    @State var timesheet = Date()
-    @State var quantity = 1
-    @State var quantityDone: Int = 0
-    @State var status: Status = .toDo
-    @State var streak: Int = 0
-    @State var repetition: [Day] = []
-    @State private var selectedDays: Set<Day> = []
-    @State private var showList = false
-    @State private var unit: String = ""
     
-    
-    
-    
-    
-    
-    
-    @EnvironmentObject var data: HabitViewModel
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var data: HabitViewModel
+
+    
+    
+    init(habit: Habit) {
+            _habitName = State(initialValue: habit.name)
+            _notification = State(initialValue: habit.notification)
+            _timesheet = State(initialValue: habit.timesheet)
+            _quantity = State(initialValue: habit.quantity)
+            _selectedDays = State(initialValue: Set(habit.repetition))
+            _unit = State(initialValue: habit.unit)
+            _habitEdit = State(initialValue: habit)
+        }
+    
     
     
     var body: some View {
-        VStack(spacing: 16){
+        VStack{
             TextField("Enter your habit", text: $habitName)
                 .padding(.horizontal)
                 .frame(height: 55)
@@ -58,9 +62,9 @@ struct AddHabitView: View {
                         }
                     }
                 }
-                	
+                
             }
-            Toggle(isOn: $noftification) {
+            Toggle(isOn: $notification) {
                 Text("Enable Notification")
             }
             .padding(.horizontal)
@@ -84,13 +88,18 @@ struct AddHabitView: View {
             
             TextField("unit (optional)", text: $unit)
             
-
+            
             
             Button{
                 presentationMode.wrappedValue.dismiss()
-                
-                data.addItem(title: habitName, notification: noftification, timesheet: timesheet, quantity: quantity, repetition: Array(selectedDays), unit: unit)
 
+
+                habitEdit.updateHabit(name: habitName,notification: notification, timesheet: timesheet,quantity: quantity,repetition: Array(selectedDays),unit: unit)
+
+                data.updateHabit(updatedHabit: habitEdit)
+                
+                
+                
                 
             } label: {
                 Text("Save")
@@ -102,38 +111,13 @@ struct AddHabitView: View {
                     .cornerRadius(10)
             }
             Spacer()
-        }
-        .padding(14)
-        .navigationTitle("Add a habit")
-    }
-}
-
-struct MultipleSelectionRow: View {
-    var day: Day
-    var isSelected: Bool
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: {
-            self.action()
-        }) {
-            HStack {
-                Text(day.rawValue)
-                if isSelected {
-                    Spacer()
-                    Image(systemName: "checkmark")
-                }
-            }
+            
         }
     }
 }
 
-
-struct AddTodoView_Previews: PreviewProvider {
+struct EditHabitView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView{
-            AddHabitView()
-        }
-        
+        EditHabitView(habit: Habit.habitData[0])
     }
 }

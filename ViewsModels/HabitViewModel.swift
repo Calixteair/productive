@@ -72,8 +72,8 @@ class HabitViewModel: ObservableObject {
         DispatchQueue.global(qos: .userInteractive).async {
             
             let calendar = Calendar.current
-            let filtered = self.habits.filter{
-                return calendar.isDate($0.timesheet,inSameDayAs: self.currentDay)
+            let filtered = self.habits.filter{ habit in
+                return habit.repetition.contains(where: { $0.rawValue == self.weekdayToDayString(calendar.component(.weekday, from: self.currentDay)) })
             }
             
             DispatchQueue.main.async {
@@ -86,6 +86,32 @@ class HabitViewModel: ObservableObject {
         }
         
     }
+    
+    
+    
+    func weekdayToDayString(_ weekday: Int) -> String {
+        switch weekday {
+            case 1:
+                return Day.Sunday.rawValue
+            case 2:
+                return Day.Monday.rawValue
+            case 3:
+                return Day.Tuesday.rawValue
+            case 4:
+                return Day.Wednesday.rawValue
+            case 5:
+                return Day.Thursday.rawValue
+            case 6:
+                return Day.Friday.rawValue
+            case 7:
+                return Day.Saturday.rawValue
+            default:
+                fatalError("Invalid weekday")
+        }
+    }
+    
+
+     
     
     
     
@@ -121,10 +147,41 @@ class HabitViewModel: ObservableObject {
         habits.move(fromOffsets: from, toOffset: to)
     }
     
+    func updateHabit(updatedHabit: Habit) {
+        guard let index = habits.firstIndex(where: { $0.id == updatedHabit.id }) else {
+            print("Habit with id \(updatedHabit.id) not found.")
+            return
+        }
+        
+        habits[index] = updatedHabit
+        filterTodayHabits()
+    }
+    
+    
+    func printAllHabitsDetails() {
+        print("Total Habits:")
+        for habit in habits {
+            print("Name: \(habit.name)")
+            print("Notification: \(habit.notification)")
+            print("Timesheet: \(habit.timesheet)")
+            print("Quantity: \(habit.quantity)")
+            print("Quantity Done: \(habit.quantityDone)")
+            print("Status: \(habit.status.rawValue)")
+            print("Streak: \(habit.streak)")
+            print("Repetition: \(habit.repetitionAsString())")
+            print("Unit: \(habit.unit)")
+            print("--------------")
+        }
+    }
+    
     func addItem(title: String, notification: Bool, timesheet: Date, quantity: Int, repetition: [Day], unit: String) {
-
-        let newHabit = Habit(name: title,noftification: notification,timesheet: timesheet, quantity: quantity,quantityDone: 0,status: .toDo, streak: 0, repetition: repetition, unit:unit)
+            
+        let newHabit = Habit(name: title,notification: notification,timesheet: timesheet, quantity: quantity,quantityDone: 0,status: .toDo, streak: 0, repetition: repetition, unit:unit)
+        
         habits.append(newHabit)
+        self.filterTodayHabits()
+        self.printAllHabitsDetails()
+
     }
     
     func updateItem(habit: Habit){
