@@ -64,7 +64,6 @@ class HabitViewModel: ObservableObject {
         getHabits()
         fetchCurrentWeek()
         filterTodayHabits()
-        historyInit()
     }
     
     func getHabits(){
@@ -93,7 +92,50 @@ class HabitViewModel: ObservableObject {
     
     func historyInit(){
         self.history = LisHistory.histoData
+        let today = Date()
+
+        let lastday = LisHistory.histoData.lastDay
+
+        // Créer un objet DateFormatter pour formater les dates
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Format de date à utiliser, adapté à LisHistory.lastDay
+
+        // Vérifier si lastDay est aujourd'hui
+        if Calendar.current.isDate(today, inSameDayAs: lastday) {
+            print("lastDay est aujourd'hui.")
+        } else {
+            // Calculer le nombre de jours entre lastDay et aujourd'hui
+            let calendar = Calendar.current
+            let daysDifference = calendar.dateComponents([.day], from: lastday, to: today).day ?? 0
+            print("lastDay n'est pas aujourd'hui. Nombre de jours écoulés depuis lastDay : \(daysDifference)")
+            findNotDohabit(nbjour: daysDifference)
+            
+        }
+        
         print(self.history)
+    }
+    
+    
+    func findNotDohabit(nbjour: Int){
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        for day in 0..<nbjour {
+            // date today - day
+            if let date = calendar.date(byAdding: .day, value: -day, to: Date()) {
+                let dayabv =  self.weekdayToDay(calendar.component(.weekday, from: date))
+                print(dayabv)
+                for habit in habits {
+                    if (habit.repetition.contains(dayabv)){
+                        let item = ItemHistory(idHabit: habit.id, streak: 0, date: date, status: .toDo)
+                        LisHistory.histoData.items.append(item)
+                    }
+                }
+                
+            }
+            
+        }
+        print(LisHistory.histoData)
     }
     
     
@@ -119,6 +161,27 @@ class HabitViewModel: ObservableObject {
         }
     }
     
+    func weekdayToDay(_ weekday: Int) -> Day {
+        switch weekday {
+            case 1:
+                return .Sunday
+            case 2:
+                return .Monday
+            case 3:
+                return .Tuesday
+            case 4:
+                return .Wednesday
+            case 5:
+                return .Thursday
+            case 6:
+                return .Friday
+            case 7:
+                return .Saturday
+            default:
+                fatalError("Invalid weekday")
+        }
+    }
+
 
      
     
@@ -195,10 +258,10 @@ class HabitViewModel: ObservableObject {
     
     
     func pushInHistory(id: Int){
-        var habitinfo = habits[id]
-        var finishhabit = ItemHistory(idHabit: habitinfo.id, streak: habitinfo.streak+1, date: Date(), status: .done)
+        let habitinfo = habits[id]
+        let finishhabit = ItemHistory(idHabit: habitinfo.id, streak: habitinfo.streak+1, date: Date(), status: .done)
         LisHistory.histoData.items.append(finishhabit)
-        print("add in histor")
+        print("add in history")
         
     }
     
