@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UserNotifications
+
 
 
 class HabitViewModel: ObservableObject {
@@ -54,17 +56,74 @@ class HabitViewModel: ObservableObject {
     }
     
     
-    func isToday(date: Date)->Bool{
+    func isCurrentDay(date: Date)->Bool{
         let calendar = Calendar.current
         return calendar.isDate(currentDay, inSameDayAs: date)
         
     }
     
+    func isToday(date: Date) -> Bool{
+        let calendar = Calendar.current
+        return calendar.isDateInToday(date)
+        
+    }
+    
+    
+
+    
     init() {
         getHabits()
         fetchCurrentWeek()
         filterTodayHabits()
+        historyInit()
+        scheduleNotifications()
     }
+    
+    
+    
+    
+    
+    
+    func createNotification(for habit: Habit) {
+            let content = UNMutableNotificationContent()
+            content.title = "Notification pour \(habit.name)"
+            content.body = "C'est l'heure de \(habit.name)"
+        
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.hour, .minute], from: habit.timesheet), repeats: true)
+
+            let request = UNNotificationRequest(identifier: habit.id.uuidString, content: content, trigger: trigger)
+
+            UNUserNotificationCenter.current().add(request) { error in
+                   if let error = error {
+                       print("Erreur lors de la planification de la notification pour \(habit.name): \(error.localizedDescription)")
+                   } else {
+                       print("Notification pour \(habit.name) planifiée avec succès a lheure de \(habit.timesheet)")
+                   }
+               }
+           }
+    
+    
+    func removeNotifications(for habit: Habit) {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [habit.id.uuidString])
+        print("La notification a ete supprimé de \(habit.name)")
+        }
+    
+    
+    func scheduleNotifications() {
+           for habit in habits {
+               if habit.notification && habit.status == .toDo {
+                   removeNotifications(for: habit)
+                   createNotification(for: habit)
+               } else {
+                   removeNotifications(for: habit)
+               }
+           }
+       }
+    
+    
+    
+    
     
     func getHabits(){
         habits.append(contentsOf: Habit.habitData)
@@ -211,6 +270,7 @@ class HabitViewModel: ObservableObject {
     func suspendHabit(habit: Habit){
         for ( index, td) in habits.enumerated(){
             if(td.id == habit.id){
+                removeNotifications(for: habits[index])
                 habits[index].status = .suspend
             }
         }
@@ -227,6 +287,14 @@ class HabitViewModel: ObservableObject {
         }
         
         habits[index] = updatedHabit
+
+        if(updatedHabit.status == .done && updatedHabit.quantity > updatedHabit.quantityDone){
+            habits[index].status = .toDo
+            habits[index].streak -= 1
+
+        
+        }
+        
         filterTodayHabits()
     }
     

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 
 
@@ -22,6 +23,13 @@ struct HabitDayView: View {
         NavigationView{
             
             VStack{
+                VStack {
+                           Button(action: {
+                               requestNotificationAuthorization()
+                           }) {
+                               Text("Demander l'autorisation des notifications")
+                           }
+                       }
                 ScrollView(.horizontal , showsIndicators: false){
                     HStack(spacing: 10){
                         ForEach(data.currentWeek,id: \.self){ day in
@@ -35,16 +43,16 @@ struct HabitDayView: View {
                                 Circle()
                                     .fill(.white)
                                     .frame(width: 8, height: 8)
-                                    .opacity(data.isToday(date: day) ? 1: 0)
+                                    .opacity(data.isCurrentDay(date: day) ? 1: 0)
                                 
                                 
                             }
                             .frame(width: 45, height: 90)
-                            .foregroundStyle(data.isToday(date: day) ? .primary : .secondary)
+                            .foregroundStyle(data.isCurrentDay(date: day) ? .primary : .secondary)
                             .background(
                             
                                 ZStack{
-                                    if data.isToday(date: day){
+                                    if data.isCurrentDay(date: day){
                                         Capsule()
                                             .fill(Color(red: 1, green: 0.8470, blue: 0.8470))
                                             .matchedGeometryEffect(id: "CURRENTDAY", in: animation)
@@ -82,15 +90,26 @@ struct HabitDayView: View {
                         else{
                             ForEach(tasks) {habit in
                                 if habit.status != .suspend {
-                                    RowView(habit: habit, type: .task)
-                                        .onTapGesture {
-                                            data.completHabit(habit: habit)
-                                            data.filterTodayHabits()
-
-                                        }
-                                        .listRowInsets(EdgeInsets())
-                                        .listRowSeparator(.hidden)
-                                        .padding(5)
+                                    if data.isToday(date: data.currentDay){
+                                        RowView(habit: habit, type: .task)
+                                            .onTapGesture {
+                                                data.completHabit(habit: habit)
+                                                data.filterTodayHabits()
+                                                
+                                            }
+                                            .listRowInsets(EdgeInsets())
+                                            .listRowSeparator(.hidden)
+                                            .padding(5)
+                                    }else {
+                                        RowView(habit: habit, type: .task)
+                                            .listRowInsets(EdgeInsets())
+                                            .listRowSeparator(.hidden)
+                                            .padding(5)
+                                        
+                                    }
+                                    
+                                    
+                                    
                                 }
                             }
                             .onDelete { indexSet in
@@ -146,7 +165,15 @@ struct HabitDayView: View {
     
 
 
-                                                                                                                                                                                                                                        
+func requestNotificationAuthorization() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                print("Autorisation des notifications accordée")
+            } else {
+                print("Autorisation des notifications refusée")
+            }
+        }
+    }
     
     
     struct HabitDayView_Previews: PreviewProvider {
