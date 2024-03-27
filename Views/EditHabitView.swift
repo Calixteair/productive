@@ -97,6 +97,8 @@ struct EditHabitView: View {
                 habitEdit.updateHabit(name: habitName,notification: notification, timesheet: timesheet,quantity: quantity,repetition: Array(selectedDays),unit: unit)
 
                 data.updateHabit(updatedHabit: habitEdit)
+                data.scheduleNotifications()
+
                 
                 
                 

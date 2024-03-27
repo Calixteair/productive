@@ -90,6 +90,8 @@ struct AddHabitView: View {
                 presentationMode.wrappedValue.dismiss()
                 
                 data.addItem(title: habitName, notification: noftification, timesheet: timesheet, quantity: quantity, repetition: Array(selectedDays), unit: unit)
+                
+                data.scheduleNotifications()
 
                 
             } label: {
