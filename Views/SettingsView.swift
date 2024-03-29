@@ -4,17 +4,21 @@
 //
 //  Created by akburak zekeriya on 29/03/2024.
 //
-
 import SwiftUI
 
 struct SettingsView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @AppStorage("notificationsEnabled") var notificationsEnabled = true
+    @AppStorage("isDarkMode") var isDarkMode = false
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
+    var body: some View {
+        Form {
+            Section(header: Text("Notifications")) {
+                Toggle("Activer les notifications", isOn: $notificationsEnabled)
+            }
+            Section(header: Text("Apparence")) {
+                Toggle("Mode sombre", isOn: $isDarkMode)
+            }
+        }
+        .navigationBarTitle("Réglages")
     }
 }

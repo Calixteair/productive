@@ -11,6 +11,8 @@ struct ContentView: View {
     
     
     @EnvironmentObject var habitViewModel: HabitViewModel
+    @AppStorage("isDarkMode") var isDarkMode = true
+
     var body: some View {
         
         TabView{
@@ -23,7 +25,7 @@ struct ContentView: View {
             SettingsView().tabItem{Label("",systemImage: "gear")}
 
 
-        }
+        }.preferredColorScheme(isDarkMode ? .dark : .light)
         
         
     }

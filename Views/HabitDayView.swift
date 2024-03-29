@@ -16,6 +16,7 @@ struct HabitDayView: View {
     @Namespace var animation
     @State private var showAlert = false
     @State private var habitToDelete: Habit?
+
     
     
     
