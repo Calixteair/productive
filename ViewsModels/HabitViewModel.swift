@@ -22,6 +22,8 @@ class HabitViewModel: ObservableObject {
     
     @Published var history: LisHistory = LisHistory.histoData
     
+    @Published var parsedList: [Habit]?
+    
     
     func fetchCurrentWeek(){
         let today = Date()
@@ -127,6 +129,7 @@ class HabitViewModel: ObservableObject {
     
     func getHabits(){
         habits.append(contentsOf: Habit.habitData)
+        parsedList = habits
     }
     
     func filterTodayHabits(){
@@ -150,10 +153,9 @@ class HabitViewModel: ObservableObject {
     }
     
     func historyInit(){
-        self.history = LisHistory.histoData
         let today = Date()
 
-        let lastday = LisHistory.histoData.lastDay
+        let lastday = history.lastDay
 
         // Créer un objet DateFormatter pour formater les dates
         let dateFormatter = DateFormatter()
@@ -170,7 +172,7 @@ class HabitViewModel: ObservableObject {
             findNotDohabit(nbjour: daysDifference)
             
         }
-        
+        print("inithisto")
         print(self.history)
     }
     
@@ -185,16 +187,16 @@ class HabitViewModel: ObservableObject {
                 let dayabv =  self.weekdayToDay(calendar.component(.weekday, from: date))
                 print(dayabv)
                 for habit in habits {
+                    print(habit.id)
                     if (habit.repetition.contains(dayabv)){
                         let item = ItemHistory(idHabit: habit.id, streak: 0, date: date, status: .toDo)
-                        LisHistory.histoData.items.append(item)
+                        history.items.append(item)
                     }
                 }
                 
             }
             
         }
-        print(LisHistory.histoData)
     }
     
     
@@ -315,6 +317,84 @@ class HabitViewModel: ObservableObject {
         }
     }
     
+    func parseedHistodata() {
+        // Vérifiez si history.items est vide
+        guard !habits.isEmpty else {
+            print("No items in history")
+            return
+        }
+        
+        parsedList = []
+        
+        // Créez un ensemble pour stocker les idHabit uniques
+        var uniqueIdHabits = Set<UUID>()
+        
+        // Parcourir chaque élément et ajouter son idHabit à l'ensemble
+        for item in habits {
+            uniqueIdHabits.insert(item.id)
+        }
+        
+        // Imprimer chaque idHabit unique
+        for idHabit in uniqueIdHabits {
+            if let habit = getHabitByuuid(UUID: idHabit) {
+                parsedList?.append(habit)
+            } else {
+                print("Habit not found for UUID: \(idHabit)")
+            }
+        }
+    }
+    
+    func nameprint(habit : Habit){
+        print(habit.name)
+    }
+    
+    
+    func pourcentageCalculation(UUID : UUID) -> Double{
+        var tot: Double = 0
+        var dotask: Double = 0
+        
+        print("taille history")
+        print(history.items.count)
+        print("taille habits")
+        print(habits.count)
+        
+        for item in history.items {
+            if(item.idHabit == UUID){
+                
+                tot = tot + 1
+                if(item.status == .done){
+                    print("item" + item.status.rawValue)
+                    dotask = dotask + 1
+                }
+                else{
+                    print("nodone")
+                }
+            }
+        }
+        print(UUID)
+        print(dotask)
+        print(tot)
+        if(tot == 0){
+            return 1
+        }
+        return  dotask / tot
+    }
+    
+    
+    // Fonction getHabitByuuid pour récupérer l'habitude en fonction de son UUID
+    func getHabitByuuid(UUID: UUID) -> Habit? {
+        // Implémentez votre logique pour rechercher l'habitude par son UUID dans la liste appropriée
+        // et retournez l'habitude si trouvée, sinon retournez nil
+        // Exemple hypothétique:
+        for habit in habits {
+            if habit.id == UUID {
+                return habit
+            }
+        }
+        return nil
+    }
+    
+    
     func addItem(title: String, notification: Bool, timesheet: Date, quantity: Int, repetition: [Day], unit: String) {
 
         let newHabit = Habit(name: title,notification: notification,timesheet: timesheet, quantity: quantity,quantityDone: 0, status: .toDo, streak: 0, repetition: repetition, unit:unit)
@@ -328,7 +408,7 @@ class HabitViewModel: ObservableObject {
     func pushInHistory(id: Int){
         let habitinfo = habits[id]
         let finishhabit = ItemHistory(idHabit: habitinfo.id, streak: habitinfo.streak+1, date: Date(), status: .done)
-        LisHistory.histoData.items.append(finishhabit)
+        history.items.append(finishhabit)
         print("add in history")
         
     }

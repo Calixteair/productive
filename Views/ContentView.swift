@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    
+    @EnvironmentObject var habitViewModel: HabitViewModel
     var body: some View {
         
         TabView{
-            
-            StatView().tabItem{Label("",systemImage: "chart.line.uptrend.xyaxis")}
             HabitDayView().tabItem{Label("",systemImage:"list.bullet.clipboard")}
+            StatView().tabItem{Label("",systemImage: "chart.line.uptrend.xyaxis")}
+                .onAppear(){
+                    print("tap stat")
+                }
+            
             SettingsView().tabItem{Label("",systemImage: "gear")}
+
+
         }
         
         
@@ -23,7 +31,8 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(HabitViewModel())
+            
     }
 }
 
