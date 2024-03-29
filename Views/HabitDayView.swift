@@ -23,13 +23,7 @@ struct HabitDayView: View {
         NavigationView{
             
             VStack{
-                VStack {
-                           Button(action: {
-                               requestNotificationAuthorization()
-                           }) {
-                               Text("Demander l'autorisation des notifications")
-                           }
-                       }
+        
                 ScrollView(.horizontal , showsIndicators: false){
                     HStack(spacing: 10){
                         ForEach(data.currentWeek,id: \.self){ day in
@@ -159,21 +153,17 @@ struct HabitDayView: View {
                 }
             }
             
+        }.onAppear{
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                           if granted {
+                               print("Autorisation accordée pour les notifications")
+                           } else {
+                               print("L'utilisateur a refusé les notifications")
+                           }
+                       }
         }
     }
 }
-    
-
-
-func requestNotificationAuthorization() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if granted {
-                print("Autorisation des notifications accordée")
-            } else {
-                print("Autorisation des notifications refusée")
-            }
-        }
-    }
     
     
     struct HabitDayView_Previews: PreviewProvider {

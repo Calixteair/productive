@@ -19,12 +19,9 @@ struct ProjethabitApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HabitDayView()
-                .environmentObject(habitViewModel)
-                .onAppear {
-                    // Appel de la fonction historyInit() sur l'instance déjà créée
-                    habitViewModel.historyInit()
-                }
+            ContentView()
+                .environmentObject(HabitViewModel())
+            
         }
     }
 }
