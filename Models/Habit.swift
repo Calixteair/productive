@@ -8,13 +8,14 @@
 import Foundation
 
 
-enum Status: String, CaseIterable{
+enum Status: String, CaseIterable, Codable{
     case done = "done"
     case toDo = "todo"
     case suspend = "suspend"
+    
 }
 
-enum Day: String, CaseIterable{
+enum Day: String, CaseIterable, Codable{
     case Monday = "MON"
     case Tuesday = "TUE"
     case Wednesday = "WED"

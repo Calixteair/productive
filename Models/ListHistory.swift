@@ -20,7 +20,7 @@ struct LisHistory: Identifiable {
     ]
 
 
-    static var histoData = LisHistory(items: listItems ,lastDay: Date())
+    static var histoData = LisHistory(items: listItems ,lastDay: Date(timeIntervalSince1970: Date().timeIntervalSince1970 - (2 * 24 * 60 * 60)))
         
     
 }
@@ -34,6 +34,7 @@ struct ItemHistory: Identifiable {
     var streak : Int
     var date: Date
     var status: Status
+    
     
 }
 
