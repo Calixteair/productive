@@ -134,27 +134,54 @@ class HabitViewModel: ObservableObject {
     func getHabits(){
         habits.append(contentsOf: Habit.habitData)
     }
-    
-    func filterTodayHabits(){
-        
+    func filterTodayHabits() {
         DispatchQueue.global(qos: .userInteractive).async {
-            
             let calendar = Calendar.current
-            let filtered = self.habits.filter{ habit in
-                return habit.repetition.contains(where: { $0.rawValue == self.weekdayToDayString(calendar.component(.weekday, from: self.currentDay)) })
-            }
             
-            DispatchQueue.main.async {
+            if calendar.isDateInToday(self.currentDay) {
+                let filtered = self.habits.filter { habit in
+                    return habit.repetition.contains { $0.rawValue == self.weekdayToDayString(calendar.component(.weekday, from: self.currentDay)) }
+                }
                 
+                DispatchQueue.main.async {
                     self.filteredHabits = filtered
-            
+                }
+            } else if self.currentDay > Date() {
+                // Le jour actuel est dans le futur, filtrez à partir des habitudes
+                let filtered = self.habits.filter { habit in
+                    return habit.repetition.contains { $0.rawValue == self.weekdayToDayString(calendar.component(.weekday, from: self.currentDay)) }
+                }
+
+                let filteredWithNewProperties = filtered.map { habit in
+                    return Habit(id: UUID(), name: habit.name, notification: false, timesheet: Date(), quantity: habit.quantity, quantityDone: 0, status: .toDo, streak: 0, repetition: habit.repetition, unit: habit.unit)
+                }
+
+                DispatchQueue.main.async {
+                    self.filteredHabits = filteredWithNewProperties
+                }
+            } else {
+                // Le jour actuel est dans le passé, filtrez à partir de l'historique
+                let filteredHistoryItems = self.history.items.filter { item in
+                    return calendar.isDate(item.date, inSameDayAs: self.currentDay)
+                }
+
+                let pastHabits = filteredHistoryItems.compactMap { item in
+                    let habit = self.habits.first { $0.id == item.idHabit }
+                    return habit.map { h in
+                        return Habit(id: UUID(), name: h.name, notification: false, timesheet: item.date, quantity: h.quantity, quantityDone: item.status == .toDo ? 0 : h.quantity, status: item.status, streak: item.streak, repetition: h.repetition, unit: h.unit)
+                    }
+                }
+
+                DispatchQueue.main.async {
+                    self.filteredHabits = pastHabits
+                }
+
                 
-                
+               
             }
         }
-        
     }
-    
+
     func historyInit(){
         self.history = LisHistory.histoData
         let today = Date()
@@ -193,14 +220,14 @@ class HabitViewModel: ObservableObject {
                 for habit in habits {
                     if (habit.repetition.contains(dayabv)){
                         let item = ItemHistory(idHabit: habit.id, streak: 0, date: date, status: .toDo)
-                        LisHistory.histoData.items.append(item)
+                        self.history.items.append(item)
                     }
                 }
                 
             }
             
         }
-        print(LisHistory.histoData)
+        print(self.history.printHistory())
     }
     
     

@@ -22,7 +22,19 @@ struct LisHistory: Identifiable {
 
     static var histoData = LisHistory(items: listItems ,lastDay: Date(timeIntervalSince1970: Date().timeIntervalSince1970 - (2 * 24 * 60 * 60)))
         
-    
+    func printHistory() {
+            print("Historique :")
+            for item in items {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy"
+                let dateString = dateFormatter.string(from: item.date)
+                print("Habit: \(item.idHabit), Streak: \(item.streak), Date: \(dateString), Status: \(item.status)")
+            }
+            let lastDayFormatter = DateFormatter()
+            lastDayFormatter.dateFormat = "dd/MM/yyyy"
+            let lastDayString = lastDayFormatter.string(from: lastDay)
+            print("Dernier jour: \(lastDayString)")
+        }
 }
 
 

@@ -44,6 +44,8 @@ struct RowView: View {
                     HStack{
                         Text(habit.name)
                             .font(.title)
+                            .foregroundColor(Color.black)
+
                             .padding()
                         Spacer()
                         ZStack(alignment:.trailing){
@@ -51,6 +53,8 @@ struct RowView: View {
                                 if habit.streak > 0{
                                     Text("🔥 \(habit.streak) Days")
                                         .padding(5)
+                                        .foregroundColor(Color.black)
+
                                     
                                     Spacer()
                                     
@@ -60,6 +64,7 @@ struct RowView: View {
                             Text("\(habit.quantityDone)/\(habit.quantity)")
                                 .font(.title2)
                                 .padding()
+                                .foregroundColor(Color.black)
                             Spacer()
                             
                         }
@@ -90,9 +95,9 @@ struct RowView: View {
                         VStack{
                             HStack{
                                 Image(systemName: "bell")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Color.gray)
                                 Text("\(habit.getTimeString())")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Color.gray)
                                 
                             }.padding([.top, .leading], 6)
                             
@@ -104,15 +109,21 @@ struct RowView: View {
                             Text(habit.name)
                                 .font(.title)
                                 .padding()
+                                .foregroundColor(Color.black)
+
                         }
                     }
                     Text(habit.repetitionAsString())
+                        .foregroundColor(Color.black)
+
                         Spacer()
                     
                     
                         Text("\(habit.quantity)")
                             .font(.title2)
                             .padding(30)
+                            .foregroundColor(Color.black)
+
                         
                     
                 }
@@ -142,9 +153,9 @@ struct RowView: View {
                         VStack{
                             HStack{
                                 Image(systemName: "bell")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Color.gray)
                                 Text("\(habit.getTimeString())")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Color.gray)
                                 
                             }.padding([.top, .leading], 6)
                             
@@ -156,6 +167,8 @@ struct RowView: View {
                             Text(habit.name)
                                 .font(.title)
                                 .padding()
+                                .foregroundColor(Color.black)
+
                         }
                     }
                     Text(habit.repetitionAsString())
@@ -165,6 +178,8 @@ struct RowView: View {
                             if habit.streak > 0{
                                 Text("🔥 \(habit.streak) Days")
                                     .padding(5)
+                                    .foregroundColor(Color.black)
+
                                 
                                 Spacer()
                                 
@@ -174,6 +189,8 @@ struct RowView: View {
                         Text("\(Int(pourcent*100))%")
                             .font(.title2)
                             .padding()
+                            .foregroundColor(Color.black)
+
                         Spacer()
                         
                     }
