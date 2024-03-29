@@ -11,7 +11,7 @@ import SwiftUI
 struct ProjethabitApp: App {
     var body: some Scene {
         WindowGroup {
-            HabitDayView()
+            ContentView()
                 .environmentObject(HabitViewModel())
             
         }
