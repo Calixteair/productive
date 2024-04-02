@@ -270,7 +270,7 @@ class HabitViewModel: ObservableObject {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         for day in 0..<nbjour {
             // date today - day
-            if let date = calendar.date(byAdding: .day, value: -day, to: Date()) {
+            if let date = calendar.date(byAdding: .day, value: -day-1, to: Date()) {
                 let dayabv =  self.weekdayToDay(calendar.component(.weekday, from: date))
                 print(dayabv)
                 for habit in habits {
