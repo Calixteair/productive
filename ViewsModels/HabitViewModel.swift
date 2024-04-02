@@ -10,6 +10,11 @@ import UserNotifications
 import SwiftUI
 
 
+struct habitandpourcent{
+    var habit: Habit
+    var pourcent : Double
+
+}
 
 
 class HabitViewModel: ObservableObject {
@@ -23,6 +28,8 @@ class HabitViewModel: ObservableObject {
     @Published var filteredHabits: [Habit]?
     
     @Published var history: LisHistory = LisHistory.histoData
+
+     @Published var parsedList: [habitandpourcent]?
     
     
     @AppStorage("notificationsEnabled") var notificationsEnabled = true
@@ -361,7 +368,7 @@ class HabitViewModel: ObservableObject {
     func pushInHistory(id: Int){
         let habitinfo = habits[id]
         let finishhabit = ItemHistory(idHabit: habitinfo.id, streak: habitinfo.streak+1, date: Date(), status: .done)
-        LisHistory.histoData.items.append(finishhabit)
+        history.items.append(finishhabit)
         print("add in history")
         
     }
@@ -375,5 +382,82 @@ class HabitViewModel: ObservableObject {
             }
         }
     }
+
+     func parseedHistodata() {
+            // Vérifiez si history.items est vide
+            guard !habits.isEmpty else {
+                print("No items in history")
+                return
+            }
+
+        parsedList = []
+
+            // Créez un ensemble pour stocker les idHabit uniques
+            var uniqueIdHabits = Set<UUID>()
+
+            // Parcourir chaque élément et ajouter son idHabit à l'ensemble
+            for item in habits {
+                uniqueIdHabits.insert(item.id)
+            }
+
+            // Imprimer chaque idHabit unique
+            for idHabit in uniqueIdHabits {
+                if let habit = getHabitByuuid(UUID: idHabit) {
+                    let pourcent = pourcentageCalculation(UUID: idHabit)
+                    let hp = habitandpourcent(habit: habit, pourcent: pourcent)
+                    parsedList?.append(hp)
+                } else {
+                    print("Habit not found for UUID: \(idHabit)")
+                }
+            }
+        }
+
+        func nameprint(habit : Habit){
+            print(habit.name)
+        }
+
+
+    func pourcentageCalculation(UUID: UUID) -> Double {
+        var tot: Double = 0
+        var dotask: Double = 0
+
+        // Parcourir chaque élément de l'historique
+        print(history.items)
+        print(history.items.count)
+        for item in history.items {
+            // Vérifier si l'ID de l'habitude correspond à l'UUID spécifié
+            if item.idHabit == UUID {
+                tot += 1
+                print("plus 1")
+                // Si la tâche est effectuée, incrémente dotask
+                if item.status == .done {
+                    dotask += 1
+                }
+            }
+        }
+        print("pourcent : " , (dotask / tot))
+        // Calculer le pourcentage
+        if tot == 0 {
+            // Si aucune tâche n'a été effectuée pour cette habitude, retourner 0
+            return 0
+        } else {
+            // Retourner le pourcentage de tâches effectuées par rapport au total des tâches
+            return (dotask / tot)
+        }
+    }
+
+
+        // Fonction getHabitByuuid pour récupérer l'habitude en fonction de son UUID
+        func getHabitByuuid(UUID: UUID) -> Habit? {
+            // Implémentez votre logique pour rechercher l'habitude par son UUID dans la liste appropriée
+            // et retournez l'habitude si trouvée, sinon retournez nil
+            // Exemple hypothétique:
+            for habit in habits {
+                if habit.id == UUID {
+                    return habit
+                }
+            }
+            return nil
+        }
 }
 
