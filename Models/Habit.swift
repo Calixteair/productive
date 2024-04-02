@@ -126,9 +126,14 @@ struct Habit: Identifiable  {
     
             
     static var habitData = [
-        Habit( name: "call parent", notification: true, timesheet: Date(), quantity: 1, quantityDone: 0, status: .toDo, streak: 7, repetition: [.Monday,.Friday,.Wednesday,.Thursday,.Tuesday], unit: "fois"),
-        Habit( name: "call dog", notification: false, timesheet: Date(), quantity: 3, quantityDone: 2, status: .toDo, streak: 0, repetition: [.Sunday,.Saturday], unit: ""),
-        Habit( name: "run", notification: false, timesheet: Date(), quantity: 1, quantityDone: 1, status: .done, streak: 10, repetition: [.Friday,.Saturday,.Sunday,.Wednesday,.Thursday,.Tuesday], unit: "")
+        Habit(name: "Muscu",notification: true,timesheet:Date(), quantity: 1,quantityDone: 0,status: .toDo, streak: 0, repetition: [.Monday,.Wednesday,.Friday], unit:""),
+        Habit(name: "boire",notification: false,timesheet:Date(), quantity: 2,quantityDone: 0,status: .toDo, streak: 0, repetition: [.Monday,.Friday,.Saturday,.Sunday,.Wednesday,.Thursday,.Tuesday], unit:"L"),
+        Habit(name: "étirement",notification: false,timesheet:Date(), quantity: 3,quantityDone: 0,status: .toDo, streak: 0, repetition: [.Monday,.Friday,.Saturday,.Sunday,.Wednesday,.Thursday,], unit:""),
+        Habit(name: "petit déjeuné",notification: false,timesheet:Date(), quantity: 1,quantityDone: 0,status: .toDo, streak: 0, repetition: [.Monday,.Friday,.Saturday,.Sunday,.Wednesday,.Thursday,.Tuesday], unit:""),
+        Habit(name: "lire",notification: false,timesheet:Date(), quantity: 5,quantityDone: 4,status: .toDo, streak: 1, repetition: [.Monday,.Friday,.Saturday,.Sunday,.Wednesday,.Thursday,.Tuesday], unit:"pages"),
+        Habit(name: "sortir les poubelles",notification: true,timesheet:Date(), quantity: 1,quantityDone: 1,status: .done, streak: 9, repetition: [.Tuesday], unit:""),
+        
+    
     ]
     
     
