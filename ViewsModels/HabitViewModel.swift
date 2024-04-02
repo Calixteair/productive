@@ -11,6 +11,14 @@ import SwiftUI
 
 
 
+ enum ValidateHabit: String, CaseIterable{
+    case valid = "Valide"
+    case invalid = "Invalide"
+    case today = "today"
+    case futur = "futur"
+}
+
+
 
 class HabitViewModel: ObservableObject {
     
@@ -134,6 +142,12 @@ class HabitViewModel: ObservableObject {
     func getHabits(){
         habits.append(contentsOf: Habit.habitData)
     }
+    
+    
+    
+
+
+    
     func filterTodayHabits() {
         DispatchQueue.global(qos: .userInteractive).async {
             let calendar = Calendar.current
@@ -181,6 +195,41 @@ class HabitViewModel: ObservableObject {
             }
         }
     }
+    
+    
+    
+    
+    func isAllHabitValid(date: Date) -> ValidateHabit {
+        let calendar = Calendar.current
+        let filtered = self.habits.filter { habit in
+            return habit.repetition.contains { $0.rawValue == self.weekdayToDayString(calendar.component(.weekday, from: date)) }
+        }
+        if calendar.isDateInToday(date) {
+            let allValid = filtered.allSatisfy { habit in
+                        return habit.status == .done
+                    }
+            return allValid ? .valid : .today
+            
+        }else if date > Date() {
+            return .futur
+            
+        }else {
+            let filteredHistoryItems = self.history.items.filter { item in
+                return calendar.isDate(item.date, inSameDayAs: date)
+            }
+            let allValid = filteredHistoryItems.allSatisfy { habit in
+                        return habit.status == .done
+                    }
+            return allValid ? .valid : .invalid
+
+        }
+    
+    
+        
+    }
+    
+    
+    
 
     func historyInit(){
         self.history = LisHistory.histoData

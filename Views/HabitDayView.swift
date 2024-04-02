@@ -35,10 +35,12 @@ struct HabitDayView: View {
                                     .font(.system(size:16))
                                     .fontWeight(.semibold)
                                 
+                                
+                            
+                                
                                 Circle()
-                                    .fill(.white)
+                                    .fill(colorForHabitValidity(data.isAllHabitValid(date: day)))
                                     .frame(width: 8, height: 8)
-                                    .opacity(data.isCurrentDay(date: day) ? 1: 0)
                                 
                                 
                             }
@@ -166,6 +168,19 @@ struct HabitDayView: View {
     }
 }
     
+
+func colorForHabitValidity(_ validity : ValidateHabit) -> Color {
+    switch validity {
+        case .valid:
+            return Color.green
+        case .today:
+            return Color.white
+    case .futur:
+        return Color.gray
+        case .invalid:
+            return Color.red
+    }
+}
     
     struct HabitDayView_Previews: PreviewProvider {
         static var previews: some View {
