@@ -20,6 +20,7 @@ struct ContentView: View {
             StatView().tabItem{Label("",systemImage: "chart.line.uptrend.xyaxis")}
                 .onAppear(){
                     print("tap stat")
+                    habitViewModel.parseedHistodata()
                 }
             
             SettingsView().tabItem{Label("",systemImage: "gear")}

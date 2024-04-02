@@ -31,22 +31,15 @@ struct StatView: View {
                             
                         }
                         else{
-                            ForEach(tasks) {habit in
-                                if habit.status != .suspend {
-                                    RowView(habit: habit, type: .statistic, pourcent: data.pourcentageCalculation(UUID: habit.id))
-                                            .listRowInsets(EdgeInsets())
-                                            .listRowSeparator(.hidden)
-                                            .padding(5)
-                                        
-                                    
-                                }
+                            ForEach(tasks, id: \.habit.id) { hp in
+                                // Utilisez simplement hp.habit car il n'est pas optionnel
+                                let habit = hp.habit
+                                RowView(habit: habit, type: .statistic, pourcent: hp.pourcent)
                             }
                             .onDelete { indexSet in
-                                if let firstIndex = indexSet.first {
-                                    self.habitToDelete = tasks[firstIndex]
+                                if let firstIndex = indexSet.first, let tasks = data.parsedList {
+                                    self.habitToDelete = tasks[firstIndex].habit
                                     self.showAlert.toggle()
-                                    
-                                    
                                 }
                             }
                             
@@ -92,6 +85,7 @@ struct StatView_Previews: PreviewProvider {
             .environmentObject(HabitViewModel())
             .onAppear{
                 print("stat appear")
+                
             }
     }
 }
